@@ -1,71 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setType } from './Redux/slices/pokemonSlice';
 
-const TypeSelector = ({ types, onSelect }) => {
-  return (
-    <select onChange={(e) => onSelect(e.target.value)}>
-      <option value="">Select a Pokemon Type</option>
-      {types.map((type) => (
-        <option key={type} value={type}>
-          {type}
-        </option>
-      ))}
-    </select>
-  );
-};
 
-const PokemonList = ({ pokemonList }) => {
-  return (
-    <ul>
-      {pokemonList.map((pokemon) => (
-        <li key={pokemon.name}>{pokemon.name}</li>
-      ))}
-    </ul>
-  );
-};
+const TypeSelector = () => {
 
-const PokemonTypeFetcher = () => {
-  const [selectedType, setSelectedType] = useState('');
-  const [pokemonList, setPokemonList] = useState([]);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
-  const types = [
+  const pokemonTypes = [
     'bug', 'grass', 'dark', 'rock', 'dragon', 'electric', 'fairy',
     'fighting', 'fire', 'flying', 'ghost', 'ground', 'ice', 'normal',
     'poison', 'steel', 'water', 'psychic'
   ];
 
-  useEffect(() => {
-    const fetchPokemonByType = async () => {
-      if (selectedType) {
-        try {
-          const response = await fetch(`https://pokeapi.co/api/v2/type/${selectedType}`);
-          if (response.ok) {
-            const data = await response.json();
-            setPokemonList(data.pokemon.map((entry) => entry.pokemon));
-            setError(null);
-          } else {
-            setPokemonList([]);
-            setError('Error fetching Pokemon data.');
-          }
-        } catch (error) {
-          console.error('Error fetching Pokemon:', error);
-          setPokemonList([]);
-          setError('An error occurred while fetching Pokemon data.');
-        }
-      }
-    };
 
-    fetchPokemonByType();
-  }, [selectedType]);
+  const handleTypeChange = (event) => {
+     const selectedType = event.target.value;
+    dispatch(setType(selectedType));
+  };
+
 
   return (
     <div>
-      <TypeSelector types={types} onSelect={setSelectedType} />
-      {selectedType && <h2>Pokemon of type {selectedType}</h2>}
-      {pokemonList.length > 0 && <PokemonList pokemonList={pokemonList} />}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <select  onChange={handleTypeChange}>
+        <option value="">All Types</option>
+        {pokemonTypes.map((type) => (
+          <option key={type} value={type}>{type}</option>
+        ))}
+      </select>
     </div>
   );
 };
 
-export default PokemonTypeFetcher;
+export default TypeSelector;

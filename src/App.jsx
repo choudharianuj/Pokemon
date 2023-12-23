@@ -1,16 +1,18 @@
+import React from 'react';
+import Header from './Header';
+import MainBody from './MainBody';
+import Footer from './Footer';
 import './App.css'
-import PokemonSearch from './PokemonSearch'
-import PokemonTypeFetcher from './TypeSelector';
-// import PokemonCardsContainer from './PokemonCardsContainer';
 
-function App() {
 
+const App = () => {
   return (
-    <div className='page-container'>
-        <PokemonSearch/>
-        <PokemonTypeFetcher />
+    <div>
+      <Header />
+      <MainBody />
+      <Footer />
     </div>
-  )
-} 
+  );
+};
 
-export default App
+export default App;

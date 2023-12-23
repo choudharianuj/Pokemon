@@ -1,30 +1,80 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    query: '',
-    pokemonData: null,
-    pokemonImage: null,
-    error: null,
+  query: null,
+  pokemonType: null,
+  pokemonDataByQuery: null,
+  pokemonDataByType: null,
+  loading: false,
+  pokemonImage: null,
+  error: null,
 };
 
 const pokemonSlice = createSlice({
-    name: 'pokemon',
-    initialState,
-    reducers: {
-        setQuery(state, action) {
-            state.query = action.payload;
-        },
-        setPokemonData(state, action) {
-            state.pokemonData = action.payload;
-        },
-        setPokemonImage(state, action) {
-            state.pokemonImage = action.payload;
-        },
-        setError(state, action) {
-            state.error = action.payload;
-        },
+  name: 'pokemon',
+  initialState,
+  reducers: {
+    setQuery: (state, action) => {
+        state.pokemonType=null;
+        state.query = action.payload;
     },
+    setType: (state, action) => {
+        state.query = null;
+        state.pokemonType = action.payload;
+    },
+    fetchPokemonDataByTypeStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchPokemonDataByTypeSuccess: (state, action) => {
+      state.pokemonDataByType = action.payload.data;
+      console.log(action.payload.data)
+      state.loading = false;
+    },
+    fetchPokemonDataByTypeFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    fetchPokemonDataByQueryStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchPokemonDataByQuerySuccess: (state, action) => {
+      state.pokemonDataByQuery = action.payload.data;
+      state.loading = false;
+    },
+    fetchPokemonDataByQueryFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    setPokemonImageStart: (state) => {
+        state.loading=true;
+        state.error = null;
+    }, 
+    setPokemonImageSuccess: (state, action) => {
+        state.loading=false;
+      
+    },
+    setPokemonImageFailure: (state, action) => {
+        state.loading=false;
+        state.error= action.payload;
+      // Optionally handle error state here
+    },
+  },
 });
 
-export const { setQuery, setPokemonData, setPokemonImage, setError } = pokemonSlice.actions;
+export const {
+  setQuery,
+  setType,
+  fetchPokemonDataByTypeStart,
+  fetchPokemonDataByTypeSuccess,
+  fetchPokemonDataByTypeFailure,
+  fetchPokemonDataByQueryStart,
+  fetchPokemonDataByQuerySuccess,
+  fetchPokemonDataByQueryFailure,
+  setPokemonImageStart,
+  setPokemonImageSuccess,
+  setPokemonImageFailure,
+} = pokemonSlice.actions;
+
 export default pokemonSlice.reducer;
