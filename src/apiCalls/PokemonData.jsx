@@ -23,6 +23,7 @@ const PokemonData = () => {
       });
 
       if (response.ok) {
+
         const data = await response.json();
         dispatch(fetchPokemonDataSuccess(data));
       } 

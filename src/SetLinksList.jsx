@@ -5,6 +5,7 @@ import { setCount, setListOfLinks } from './Redux/slices/dataSlice';
 const SetLinksList = () => {
   const dispatch = useDispatch();
   const pokemonDataFromStore = useSelector((state) => state.pokemon.pokemonData);
+
  
   useEffect(() => {
     if (pokemonDataFromStore) {
@@ -12,12 +13,18 @@ const SetLinksList = () => {
 
       const extractedData = pokemonDataFromStore?.pokemon || pokemonDataFromStore?.results;
 
-      if (extractedData) {
-        const newUrlArray = extractedData.slice(0,30).map((link) => (link.url || link.pokemon.url));
+      const queryExtractedData = pokemonDataFromStore.weight
 
+      if (extractedData) {
+
+        const newUrlArray = extractedData.slice(0,30).map((link) => (link.url || link.pokemon.url));
         dispatch(setListOfLinks(newUrlArray));
 
-      } else {
+      } 
+      else if(queryExtractedData){
+        dispatch(setListOfLinks(null));
+      }
+      else {
         console.error('Pokemon data not found in expected format');
       }
     }

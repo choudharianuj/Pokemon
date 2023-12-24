@@ -19,12 +19,12 @@ const dataSlice = createSlice({
     },
     setListOfCards: (state, action) => {
       state.listOfCards = action.payload;
+      console.log( action.payload)
     },
     setListOfIds: (state, action) =>{
       state.listOfIds = action.payload;
-      // console.log(action.payload)
     },
- 
+
   },
 });
 
