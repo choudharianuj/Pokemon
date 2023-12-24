@@ -1,38 +1,43 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  fetchPokemonImageStart,
-  fetchPokemonImageSuccess,
-  fetchPokemonImageFailure,
+  setPokemonImageStart,
+  setPokemonImageSuccess,
+  setPokemonImageFailure
 } from '../Redux/slices/pokemonSlice'; // Assuming actions are defined here
 
 const PokemonImage = () => {
-
   const dispatch = useDispatch();
-
-  const pokemonData = useSelector((state) => state.pokemon.pokemonData);
-  const image = useSelector((state) => state.pokemon.image);
-  // const loading = useSelector((state) => state.pokemon.imageLoading);
-  // const error = useSelector((state) => state.pokemon.imageError);
+  const listOfIds = useSelector((state) => state.data.listOfIds); // Access listOfIds
+  // console.log(listOfIds)
 
   useEffect(() => {
-    if (pokemonData && pokemonData.id && !image) {
-      dispatch(fetchPokemonImageStart());
-      const imageUrl = `https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${pokemonData.id}.svg`;
+    dispatch(setPokemonImageStart()); // Indicate image fetching start
 
-      fetch(imageUrl)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          dispatch(fetchPokemonImageSuccess(url));
-        })
-        .catch((error) => {
-          dispatch(fetchPokemonImageFailure(error.message));
-        });
-    }
-  }, [pokemonData, image, dispatch]);
+    const fetchAllImages = async () => {
+      const imageUrls = listOfIds.map((id) => {
+        const imageUrl = `https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${id}.svg`;
+        return imageUrl;
+      });
 
-  return null;
+      const images = await Promise.all(imageUrls.map(fetchImage)); // Fetch all images concurrently
+      dispatch(setPokemonImageSuccess(images)); // Dispatch array of images
+      // console.log(images)
+    };
+    fetchAllImages();
+  }, [listOfIds, dispatch]);
+
+};
+
+const fetchImage = async (imageUrl) => {
+  try {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    return url; // Return the image URL
+  } catch (error) {
+    dispatch(setPokemonImageFailure(error.message));
+  }
 };
 
 export default PokemonImage;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setListOfCards } from './Redux/slices/dataSlice';
+import { setListOfCards, setListOfIds } from './Redux/slices/dataSlice';
+import { useEffect } from 'react';
 
 const OrganiseCardData = (props) => {
 
@@ -8,6 +9,7 @@ const OrganiseCardData = (props) => {
     const dispatch = useDispatch();
 
     const finalArray = [];
+    const cardIds = [];
 
     originalData.forEach((cardData) => {
     const reducedData = {
@@ -26,11 +28,24 @@ const OrganiseCardData = (props) => {
         abilities: cardData.abilities.map((ability) => ability.ability.name),
     };
 
+    const createCardIdsArray = (data) => {
+      const ids = data.map((card) => card.id);
+      return ids;
+    };
+
     finalArray.push(reducedData);
+    cardIds.push(reducedData.id);
+    // console.log(cardIds);
+    
+
 
     });
-    
-    dispatch(setListOfCards(finalArray));
+    useEffect(() => {
+      dispatch(setListOfCards(finalArray));
+      dispatch(setListOfIds(cardIds));
+       // Dispatch here after rendering
+    }, [finalArray]); // Re-dispatch when finalArray changes
+  
 
   return (
     <div></div>

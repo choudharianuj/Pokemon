@@ -7,8 +7,8 @@ import {
 } from '../Redux/slices/pokemonSlice';
 
 const PokemonData = () => {
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const type = useSelector((state) => state.pokemon.pokemonType);
   const query = useSelector((state) => state.pokemon.query);
 

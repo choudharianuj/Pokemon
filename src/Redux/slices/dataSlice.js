@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   count: 0,
   listOfLinks: [],
+  listOfIds: [],
   listOfCards: [],
 };
 
@@ -19,9 +20,14 @@ const dataSlice = createSlice({
     setListOfCards: (state, action) => {
       state.listOfCards = action.payload;
     },
+    setListOfIds: (state, action) =>{
+      state.listOfIds = action.payload;
+      // console.log(action.payload)
+    },
+ 
   },
 });
 
-export const { setCount, setListOfLinks, setListOfCards } = dataSlice.actions;
+export const { setCount, setListOfLinks, setListOfCards, setListOfIds} = dataSlice.actions;
 
 export default dataSlice.reducer;

@@ -6,6 +6,7 @@ const initialState = {
   pokemonData: null,
   loading: false,
   pokemonImage: null,
+  imageLoading: false,
   error: null,
 };
 
@@ -24,26 +25,23 @@ const pokemonSlice = createSlice({
       state.error = null;
     },
     fetchPokemonDataSuccess: (state, action) => {
-
       state.pokemonData = action.payload;
       state.loading = false;
-
     },
     fetchPokemonDataFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },
     setPokemonImageStart: (state) => {
-        state.loading=true;
+        state.imageLoading=true;
         state.error = null;
     }, 
     setPokemonImageSuccess: (state, action) => {
         state.pokemonImage = action.payload;
         state.loading=false;
-      
     },
     setPokemonImageFailure: (state, action) => {
-        state.loading=false;
+        state.imageLoading=false;
         state.error= action.payload;
       // Optionally handle error state here
     },

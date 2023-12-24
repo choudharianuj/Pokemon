@@ -5,8 +5,7 @@ import { setCount, setListOfLinks } from './Redux/slices/dataSlice';
 const SetLinksList = () => {
   const dispatch = useDispatch();
   const pokemonDataFromStore = useSelector((state) => state.pokemon.pokemonData);
-  const linkoflist = useSelector((state) => state.data.listOfLinks);
-
+ 
   useEffect(() => {
     if (pokemonDataFromStore) {
       dispatch(setCount(pokemonDataFromStore.count));

@@ -2,6 +2,7 @@ import React from 'react';
 import PokemonDataByType from './apiCalls/PokemonData';
 import SetLinksList from './SetLinksList';
 import FetchAndStoreCards from './FetchAndStoreCards'
+import PokemonImage from './apiCalls/PokemonImage';
 
 const MainBody = () => {
   return (
@@ -9,6 +10,7 @@ const MainBody = () => {
       <PokemonDataByType/>
       <SetLinksList />
       <FetchAndStoreCards />
+      <PokemonImage />
     </main>
   );
 };
