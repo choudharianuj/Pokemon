@@ -12,8 +12,8 @@ const PokemonImage = () => {
 
   const pokemonData = useSelector((state) => state.pokemon.pokemonData);
   const image = useSelector((state) => state.pokemon.image);
-  const loading = useSelector((state) => state.pokemon.imageLoading);
-  const error = useSelector((state) => state.pokemon.imageError);
+  // const loading = useSelector((state) => state.pokemon.imageLoading);
+  // const error = useSelector((state) => state.pokemon.imageError);
 
   useEffect(() => {
     if (pokemonData && pokemonData.id && !image) {

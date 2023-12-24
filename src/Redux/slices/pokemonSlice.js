@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  query: null,
+  query: '',
   pokemonType: null,
-  pokemonDataByQuery: null,
-  pokemonDataByType: null,
+  pokemonData: null,
   loading: false,
   pokemonImage: null,
   error: null,
@@ -15,43 +14,31 @@ const pokemonSlice = createSlice({
   initialState,
   reducers: {
     setQuery: (state, action) => {
-        state.pokemonType=null;
         state.query = action.payload;
     },
     setType: (state, action) => {
-        state.query = null;
         state.pokemonType = action.payload;
     },
-    fetchPokemonDataByTypeStart: (state) => {
+    fetchPokemonDataStart: (state) => {
       state.loading = true;
       state.error = null;
     },
-    fetchPokemonDataByTypeSuccess: (state, action) => {
-      state.pokemonDataByType = action.payload.data;
-      console.log(action.payload.data)
+    fetchPokemonDataSuccess: (state, action) => {
+
+      state.pokemonData = action.payload;
       state.loading = false;
+
     },
-    fetchPokemonDataByTypeFailure: (state, action) => {
+    fetchPokemonDataFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
-    },
-    fetchPokemonDataByQueryStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    fetchPokemonDataByQuerySuccess: (state, action) => {
-      state.pokemonDataByQuery = action.payload.data;
-      state.loading = false;
-    },
-    fetchPokemonDataByQueryFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     setPokemonImageStart: (state) => {
         state.loading=true;
         state.error = null;
     }, 
     setPokemonImageSuccess: (state, action) => {
+        state.pokemonImage = action.payload;
         state.loading=false;
       
     },
@@ -66,12 +53,9 @@ const pokemonSlice = createSlice({
 export const {
   setQuery,
   setType,
-  fetchPokemonDataByTypeStart,
-  fetchPokemonDataByTypeSuccess,
-  fetchPokemonDataByTypeFailure,
-  fetchPokemonDataByQueryStart,
-  fetchPokemonDataByQuerySuccess,
-  fetchPokemonDataByQueryFailure,
+  fetchPokemonDataStart,
+  fetchPokemonDataSuccess,
+  fetchPokemonDataFailure,
   setPokemonImageStart,
   setPokemonImageSuccess,
   setPokemonImageFailure,

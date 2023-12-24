@@ -1,13 +1,14 @@
 import React from 'react';
-import PokemonDataByQuery from './apiCalls/PokemonDataByQuery';
-import PokemonDataByType from './apiCalls/PokemonDataByType';
+import PokemonDataByType from './apiCalls/PokemonData';
+import SetLinksList from './SetLinksList';
+import FetchAndStoreCards from './FetchAndStoreCards'
 
 const MainBody = () => {
   return (
     <main>
-      {/* Pokemon list and modal will be rendered here */}
-      <PokemonDataByQuery/>
       <PokemonDataByType/>
+      <SetLinksList />
+      <FetchAndStoreCards />
     </main>
   );
 };

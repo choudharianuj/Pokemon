@@ -1,0 +1,15 @@
+.Header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.Header-right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.space{
+    width: 150px;
+}
